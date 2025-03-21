@@ -1,8 +1,7 @@
-// app/layout.tsx
+import { AuthProvider } from '@/context/AuthContext';
 import Navbar from '@/components/Navbar';
 import './globals.css';
 import { ReactNode } from 'react';
-
 
 export const metadata = {
   title: 'PikaStore',
@@ -15,11 +14,13 @@ export default function RootLayout({
   children: ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="bg-gray-900 min-h-screen">
-        <Navbar />
-        {children}
-      </body>
-    </html>
+    <AuthProvider>
+      <html lang="en">
+        <body className="bg-gray-900 min-h-screen">
+          <Navbar />
+          {children}
+        </body>
+      </html>
+    </AuthProvider>
   );
 }

@@ -1,31 +1,15 @@
-'use client'
+'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import Cookies from 'js-cookie';
-import '@/app/globals.css';
-import '@fontsource/fusion-pixel-12px-monospaced-tc'
+import { useAuth } from '@/context/AuthContext';
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Estado para el menú desplegable
+  const { isLoggedIn, logout } = useAuth();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Check if the user is logged in by checking if the token exists in cookies
-  useEffect(() => {
-    const token = Cookies.get('token');
-    setIsLoggedIn(!!token); // If token exists, the user is logged in
-  }, []);
-
-  // Función para manejar la visibilidad del menú
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-  };
-
-  // Función para cerrar sesión
-  const handleLogout = () => {
-    Cookies.remove('token');
-    setIsLoggedIn(false);
-    // Redirigir o hacer algo después del logout, como ir al home
   };
 
   return (
@@ -33,9 +17,8 @@ const Navbar = () => {
       <div className="flex justify-between items-center">
         {/* Logo and Site Name */}
         <div className="flex items-center space-x-2 gap-4">
-
           <img
-            src="/Logo.PNG" // Make sure the logo image is in the public folder
+            src="/Logo.PNG"
             alt="PikaStore Logo"
             className="w-12 h-12"
           />
@@ -63,7 +46,7 @@ const Navbar = () => {
                     <li className="py-2 px-4 hover:bg-gray-600"><Link href="/profile">My Profile</Link></li>
                     <li className="py-2 px-4 hover:bg-gray-600"><Link href="/orders">My Orders</Link></li>
                     <li className="py-2 px-4 hover:bg-gray-600"><Link href="/cards">My Cards</Link></li>
-                    <li className="py-2 px-4 hover:bg-gray-600 cursor-pointer" onClick={handleLogout}>Logout</li>
+                    <li className="py-2 px-4 hover:bg-gray-600 cursor-pointer" onClick={logout}>Logout</li>
                   </ul>
                 </div>
               )}

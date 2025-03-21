@@ -3,7 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { loginUser } from '@/app/utils/api';
-import Cookies from 'js-cookie';
+import { useAuth } from '@/context/AuthContext';
 import { useState } from 'react';
 
 interface LoginFormInputs {
@@ -14,15 +14,15 @@ interface LoginFormInputs {
 export default function LoginPage() {
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>();
   const router = useRouter();
+  const { login } = useAuth(); // Use hook to access context
   const [errorMessage, setErrorMessage] = useState('');
 
   const onSubmit = async (data: LoginFormInputs) => {
     try {
       const response = await loginUser(data);
-      // Save token in cookies
-      Cookies.set('token', response.token, { expires: 7, path: '/' });
-
-      // Redirect to home page after login
+      login(response.token);
+      
+      // redirect to catalog
       router.push('/');
     } catch (error) {
       console.error('Login error:', error);
