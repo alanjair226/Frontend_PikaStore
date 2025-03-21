@@ -1,3 +1,8 @@
+@import '@fontsource/fusion-pixel-12px-monospaced-tc';
 @import "tailwindcss";
-@tailwind utilities;
 
+@theme {
+    --font-pixel: 'Fusion Pixel 12px Monospaced TC', sans-serif;
+}
+
+@tailwind utilities;
