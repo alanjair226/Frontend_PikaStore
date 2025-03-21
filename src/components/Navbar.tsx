@@ -29,16 +29,16 @@ const Navbar = () => {
           {!isLoggedIn ? (
             <>
               <Link href="/auth/login">
-                <button className="text-white text-lg">Login</button>
+                <button className="text-white text-lg cursor-pointer">Login</button>
               </Link>
               <Link href="/auth/register">
-                <button className="text-white text-lg">Register</button>
+                <button className="text-white text-lg cursor-pointer">Register</button>
               </Link>
             </>
           ) : (
             <div className="relative">
               {/* Profile Button */}
-              <button onClick={toggleMenu} className="text-white">Profile</button>
+              <button onClick={toggleMenu} className="text-white text-lg cursor-pointer">Profile</button>
               {/* Dropdown menu */}
               {isMenuOpen && (
                 <div className="absolute right-0 mt-2 bg-gray-700 text-white rounded shadow-lg w-48 p-2">
