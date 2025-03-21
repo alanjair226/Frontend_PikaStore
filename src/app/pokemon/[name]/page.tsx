@@ -30,8 +30,10 @@ const typeColorMapping: Record<string, { normal: string; hover: string }> = {
 };
 
 export default async function PokemonDetails({ params, searchParams }: PokemonDetailsProps) {
-    const { name } = params;
-    const ourPrice = searchParams.price ? searchParams.price : 'N/A';
+    const { name } = await params;
+    const ourPrice = (await searchParams).price ? (await searchParams).price : 'N/A';
+
+
 
     let pokemon;
     try {
