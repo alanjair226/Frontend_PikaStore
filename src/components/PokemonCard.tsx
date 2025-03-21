@@ -1,3 +1,4 @@
+// src/components/PokemonCard.tsx
 import Link from 'next/link';
 
 interface PokemonCardProps {
@@ -24,15 +25,14 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ id, name, sprite, base_price,
         <p className="text-gray-300 text-sm mt-2">Price: ${base_price}</p>
         {/* Pokémon category */}
         <p className="text-gray-300 text-sm">Category: {category}</p>
-        {/* Link to details */}
+        {/* Link to details (pass our price as query parameter) */}
         <div className="mt-4">
-        <Link
-  href={`/pokemon/${name}`}
-  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
->
-  View Details
-</Link>
-
+          <Link
+            href={`/pokemon/${name}?price=${base_price}`}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
+          >
+            View Details
+          </Link>
         </div>
       </div>
     </div>
