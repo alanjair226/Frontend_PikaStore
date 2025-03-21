@@ -3,10 +3,10 @@ import axios from 'axios';
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // Function to get the list of Pokémon from OUR API
-export const getPokemons = async (page: number, type: string, category: string) => {
+export const getPokemons = async (page: number, type: string, category: string, search?: string) => {
     try {
         const response = await axios.get(`${API_URL}/pokemon/pagination`, {
-            params: { page, type, category },
+            params: { page, type, category, search },
         });
         return response.data;
     } catch (error) {

@@ -12,7 +12,7 @@ const Navbar = () => {
         {/* Logo and Site Name */}
         <div className="flex items-center space-x-2">
           <img
-            src="/logo1.png" // Make sure the logo image is in the public folder
+            src="/logotransparente.jpg" // Make sure the logo image is in the public folder
             alt="PikaStore Logo"
             className="w-10 h-10"
           />
