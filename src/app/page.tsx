@@ -5,6 +5,7 @@ import { getPokemons } from '@/app/utils/api'; // Function that calls /pokemon/p
 import { getPokemonTypesFromPokeAPI } from '@/app/utils/pokeapi'; // Function to get available types from PokéAPI
 import PokemonCard from '@/components/PokemonCard';
 
+
 export default function Home() {
   // Catalog state holds the API response: { data, currentPage, totalPages, totalItems }
   const [catalog, setCatalog] = useState({

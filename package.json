@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fontsource/fusion-pixel-12px-monospaced-tc": "^5.2.5",
     "axios": "^1.8.4",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",

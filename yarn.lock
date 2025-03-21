@@ -95,6 +95,11 @@
     "@eslint/core" "^0.12.0"
     levn "^0.4.1"
 
+"@fontsource/fusion-pixel-12px-monospaced-tc@^5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@fontsource/fusion-pixel-12px-monospaced-tc/-/fusion-pixel-12px-monospaced-tc-5.2.5.tgz#323643eeafff6d20a9a69d0a0d88c16d0d57a0b8"
+  integrity sha512-JsVf/c04rt5qxa3AdoD5lnuFzKaeKEoRFMBFvMv1RcXZBbkk+DACLyyng01qB3xuPXXbU5OFthl1It14vnqJZA==
+
 "@humanfs/core@^0.19.1":
   version "0.19.1"
   resolved "https://registry.yarnpkg.com/@humanfs/core/-/core-0.19.1.tgz#17c55ca7d426733fe3c561906b8173c336b40a77"
