@@ -3,6 +3,10 @@
 
 @theme {
     --font-pixel: 'Fusion Pixel 12px Monospaced TC', sans-serif;
+    --color-background: #21212b;
+    --color-primary: #4e3e59;
+    --color-secondary: #352d42;
+    --color-accents: #6c4d76;
 }
 
 @tailwind utilities;
