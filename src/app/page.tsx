@@ -74,8 +74,7 @@ export default function Home() {
   };
 
   return (
-    <main className="p-4">
-      <h1 className="text-2xl mb-4 text-white">Pokémon Catalog</h1>
+    <main className="p-4 md:px-32 lg:px-64">
       
       {/* Filters Section */}
       <div className="flex flex-col sm:flex-row items-center gap-4 mb-4">
@@ -125,11 +124,12 @@ export default function Home() {
       ) : (
         <>
           {/* Grid for displaying Pokémon cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {catalog.data.map((pokemon) => (
               <PokemonCard
                 key={pokemon.id}
                 id={pokemon.id}
+                types={pokemon.types}
                 name={pokemon.name}
                 sprite={pokemon.sprite}
                 base_price={pokemon.base_price}
@@ -138,11 +138,11 @@ export default function Home() {
             ))}
           </div>
           {/* Pagination Controls */}
-          <div className="flex justify-center items-center mt-8 space-x-4">
+          <div className="flex justify-end items-center mt-8 space-x-4">
             <button
               onClick={handlePrevious}
               disabled={currentPage === 1}
-              className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+              className="px-4 py-2 bg-accents text-white rounded disabled:opacity-50"
             >
               Previous
             </button>
@@ -152,7 +152,7 @@ export default function Home() {
             <button
               onClick={handleNext}
               disabled={currentPage === catalog.totalPages}
-              className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+              className="px-4 py-2 bg-accents text-white rounded disabled:opacity-50"
             >
               Next
             </button>
