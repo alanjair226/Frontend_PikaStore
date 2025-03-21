@@ -1,10 +1,17 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Cookies from 'js-cookie';
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Replace with real authentication logic
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Check if the user is logged in by checking if the token exists in cookies
+  useEffect(() => {
+    const token = Cookies.get('token');
+    setIsLoggedIn(!!token); // If token exists, the user is logged in
+  }, []);
 
   return (
     <nav className="bg-gray-800 p-4">
@@ -12,7 +19,7 @@ const Navbar = () => {
         {/* Logo and Site Name */}
         <div className="flex items-center space-x-2">
           <img
-            src="/logotransparente.jpg" // Make sure the logo image is in the public folder
+            src="/Logo.PNG" // Make sure the logo image is in the public folder
             alt="PikaStore Logo"
             className="w-10 h-10"
           />
