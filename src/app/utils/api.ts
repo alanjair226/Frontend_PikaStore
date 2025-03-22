@@ -283,7 +283,7 @@ export const getOrders = async () => {
         const decodedToken: any = jwtDecode(token);
         const userId = decodedToken.userId;
 
-        const response = await axios.post(
+        const response = await axios.get(
             `${API_URL}/orders/${userId}`,
             {
                 headers: {
