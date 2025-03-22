@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import Image from 'next/image';
@@ -12,6 +12,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cartItemsCount } = useCart();
   const router = useRouter();
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -24,6 +25,25 @@ const Navbar = () => {
       router.push('/cart'); // Otherwise, go to the cart page
     }
   };
+
+  // Close the menu if a click is detected outside of the profile menu area
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMenuOpen]);
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-accents p-4 px-4 font-pixel md:px-24 lg:px-32 shadow">
@@ -74,13 +94,16 @@ const Navbar = () => {
               </Link>
             </>
           ) : (
-            <div className="relative">
+            <div className="relative" ref={menuRef}>
               {/* Profile Button */}
               <button onClick={toggleMenu} className="text-white text-lg cursor-pointer">Profile</button>
               {/* Dropdown menu */}
               {isMenuOpen && (
                 <div className="absolute right-0 mt-2 bg-gray-700 text-white rounded shadow-lg w-48 p-2 z-50">
                   <ul>
+                    <li className="py-2 px-4 hover:bg-gray-600">
+                      <Link href="/profile">My Profile</Link>
+                    </li>
                     <li className="py-2 px-4 hover:bg-gray-600">
                       <Link href="/orders">My Orders</Link>
                     </li>
