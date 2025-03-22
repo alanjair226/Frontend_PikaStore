@@ -70,7 +70,7 @@ export const getCartItemsNumber = async () => {
             },
         });
 
-        return response.data.items.reduce((total:any, item:any) => total + item.quantity, 0);
+        return response.data.items.reduce((total: any, item: any) => total + item.quantity, 0);
     } catch (error) {
         console.error('Error fetching cart items:', error);
         throw error;
@@ -104,7 +104,7 @@ export const getCart = async () => {
     }
 };
 
-export const patchCartItem = async (cartItemId:number, newPokeballId: number) => {
+export const patchCartItem = async (cartItemId: number, newPokeballId: number) => {
     try {
         // Get token from cookies
         const token = Cookies.get('token');
@@ -117,7 +117,7 @@ export const patchCartItem = async (cartItemId:number, newPokeballId: number) =>
         const decodedToken: any = jwtDecode(token);
         const userId = decodedToken.userId;
 
-        console.log(userId ,cartItemId, newPokeballId)
+        console.log(userId, cartItemId, newPokeballId)
 
         // Make the request to the cart endpoint with userId
         const response = await axios.patch(`${API_URL}/cart/update-item`, {
@@ -131,7 +131,7 @@ export const patchCartItem = async (cartItemId:number, newPokeballId: number) =>
         });
 
         if (response.status === 200) {
-            
+
             return { message: 'PokeBall changed' };
         } else {
             throw new Error('Failed to change PokeBall');
@@ -201,3 +201,90 @@ export const addPokemonToCart = async (pokemonId: number) => {
         throw error; // Will be handled by the calling component
     }
 };
+
+
+export const registerCard = async (cardNumber: string, expirationDate: string, cardholderName: string) => {
+    try {
+        const token = Cookies.get('token');
+        if (!token) {
+            throw new Error('No token found');
+        }
+
+        const decodedToken: any = jwtDecode(token);
+        const userId = decodedToken.userId;
+
+        const response = await axios.post(
+            `${API_URL}/cards`,
+            {
+                user: userId,
+                card_number: cardNumber,
+                expiration_date: expirationDate,
+                cardholder_name: cardholderName,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+
+        if (response.status === 201) {
+            return { message: 'Card registered successfully' };
+        } else {
+            throw new Error('Failed to register card');
+        }
+    } catch (error) {
+        console.error('Error registering card:', error);
+        throw error;
+    }
+};
+
+export const getCardsByUser = async () => {
+    try {
+        // Get the token from cookies
+        const token = Cookies.get('token');
+        if (!token) {
+            throw new Error('No token found');
+        }
+
+        // Decode the token to get the userId
+        const decodedToken: any = jwtDecode(token);
+        const userId = decodedToken.userId;
+
+        // Make the GET request to fetch the user's cards
+        const response = await axios.get(`${API_URL}/cards/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`, // Send token in the authorization header
+            },
+        });
+
+        return response.data; // Return the cards data
+    } catch (error) {
+        console.error('Error fetching cards:', error);
+        throw error;
+    }
+};
+
+
+export const getCardById = async (cardId: number) => {
+    try {
+        // Get the token from cookies
+        const token = Cookies.get('token');
+        if (!token) {
+            throw new Error('No token found');
+        }
+
+        // Make the GET request to fetch the specific card by ID
+        const response = await axios.get(`${API_URL}/cards/card/${cardId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`, // Send token in the authorization header
+            },
+        });
+
+        return response.data; // Return the specific card data
+    } catch (error) {
+        console.error('Error fetching card:', error);
+        throw error;
+    }
+};
+
