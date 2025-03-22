@@ -28,6 +28,7 @@ const typeColorMapping: Record<string, { normal: string; hover: string }> = {
   steel: { normal: 'rgba(192,192,192,0.8)', hover: 'rgba(192,192,192,1)' },
   fairy: { normal: 'rgba(255,182,193,0.8)', hover: 'rgba(255,182,193,1)' },
   normal: { normal: 'rgba(169,169,169,0.8)', hover: 'rgba(169,169,169,1)' },
+  flying: { normal: 'rgba(230,80,80,0.8)', hover: 'rgba(230,80,80,1)' },
 };
 
 const PokemonCard: React.FC<PokemonCardProps> = ({ id, name, sprite, base_price, category, types }) => {
