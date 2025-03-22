@@ -78,6 +78,7 @@ export const getCartItemsNumber = async () => {
 };
 
 export const addPokemonToCart = async (pokemonId: number) => {
+    console.log(pokemonId)
     try {
         // Get token from cookies
         const token = Cookies.get('token');
@@ -100,7 +101,14 @@ export const addPokemonToCart = async (pokemonId: number) => {
             }
         });
 
-        return response.data; // Return the response, typically { message: 'Pokemon added to cart' }
+        // Check if the response status is 201 (Created)
+        if (response.status === 201) {
+            console.log('Pokemon added to cart successfully!');
+            return { message: 'Pokemon added to cart successfully' };
+        } else {
+            throw new Error('Failed to add Pokémon to cart');
+        }
+
     } catch (error) {
         console.error('Error adding Pokémon to cart:', error);
         throw error; // Will be handled by the calling component

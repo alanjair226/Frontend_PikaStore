@@ -76,7 +76,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ id, name, sprite, base_price,
         {/* Link to details (pass our price as query parameter) */}
         <div className="mt-4">
           <Link
-            href={`/pokemon/${name}?price=${base_price}`}
+            href={`/pokemon/${name}?price=${base_price}&id=${id}`}
             className="bg-accents text-white text-center px-4 py-2 rounded-lg w-full block text-lg font-bold hover:bg-primary transition duration-200"
           >
             View Details
