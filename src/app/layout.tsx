@@ -3,6 +3,7 @@ import Navbar from '@/components/Navbar';
 import './globals.css';
 import { ReactNode } from 'react';
 import { CartProvider } from '@/context/CartContext';
+import Footer from '@/components/Footer';
 
 export const metadata = {
   title: 'PikaStore',
@@ -21,6 +22,7 @@ export default function RootLayout({
           <body className="bg-background min-h-screen pt-24">
             <Navbar />
             {children}
+            <Footer/>
           </body>
         </html>
       </CartProvider>
