@@ -91,7 +91,7 @@ export default function PokemonDetails() {
     }
 
     return (
-        <main className="bg-gray-900 min-h-screen py-12 px-4">
+        <main className="min-h-screen py-12 px-4">
             <div className="max-w-6xl mx-auto">
                 <Link href="/" className="text-white block mb-4 text-xl">
                     &larr; Back to Catalog
