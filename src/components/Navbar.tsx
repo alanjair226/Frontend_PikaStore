@@ -5,36 +5,18 @@ import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
-import { getCartItemsNumber } from '@/app/utils/api';
+import { useCart } from '@/context/CartContext'; // Importa el hook de contexto
 
 const Navbar = () => {
   const { isLoggedIn, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [cartItemsCount, setCartItemsCount] = useState(0);
+  const { cartItemsCount, updateCartCount } = useCart(); // Obtén el contador y la función para actualizarlo
   const router = useRouter();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Fetch the number of items in the cart, only if logged in
-  useEffect(() => {
-    if (isLoggedIn) {
-      const fetchCartItems = async () => {
-        try {
-          const itemsCount = await getCartItemsNumber();  // Call to fetch cart items
-          setCartItemsCount(itemsCount);  // Update cart items count state
-        } catch (error) {
-          console.error('Error fetching cart items:', error);  // Handle error if fetching fails
-        }
-      };
-      fetchCartItems();  // Trigger fetching if the user is logged in
-    } else {
-      setCartItemsCount(0);  // If not logged in, reset cart items count
-    }
-  }, [isLoggedIn]); 
-
-  // Handle cart click, if not logged in, redirect to login
   const handleCartClick = () => {
     if (!isLoggedIn) {
       router.push('/auth/login');  // Redirect to login if not logged in
@@ -42,7 +24,6 @@ const Navbar = () => {
       router.push('/cart');  // Otherwise, go to the cart page
     }
   };
-
   return (
     <nav className="bg-accents p-4 px-4 font-pixel md:px-24 lg:px-32">
       <div className="flex justify-between items-center">
