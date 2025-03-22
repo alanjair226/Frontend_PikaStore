@@ -1,15 +1,46 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
+import Image from "next/image";
+import { useRouter } from 'next/navigation';
+import { getCartItemsNumber } from '@/app/utils/api';
 
 const Navbar = () => {
   const { isLoggedIn, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [cartItemsCount, setCartItemsCount] = useState(0);
+  const router = useRouter();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  // Fetch the number of items in the cart, only if logged in
+  useEffect(() => {
+    if (isLoggedIn) {
+      const fetchCartItems = async () => {
+        try {
+          const itemsCount = await getCartItemsNumber();  // Call to fetch cart items
+          setCartItemsCount(itemsCount);  // Update cart items count state
+        } catch (error) {
+          console.error('Error fetching cart items:', error);  // Handle error if fetching fails
+        }
+      };
+      fetchCartItems();  // Trigger fetching if the user is logged in
+    } else {
+      setCartItemsCount(0);  // If not logged in, reset cart items count
+    }
+  }, [isLoggedIn]); 
+
+  // Handle cart click, if not logged in, redirect to login
+  const handleCartClick = () => {
+    if (!isLoggedIn) {
+      router.push('/auth/login');  // Redirect to login if not logged in
+    } else {
+      router.push('/cart');  // Otherwise, go to the cart page
+    }
   };
 
   return (
@@ -17,15 +48,34 @@ const Navbar = () => {
       <div className="flex justify-between items-center">
         {/* Logo and Site Name */}
         <div className="flex items-center space-x-2 gap-4">
-          <img
+          <Image
             src="/Logo.PNG"
             alt="PikaStore Logo"
-            className="w-12 h-12"
+            width={48}
+            height={48}
           />
           <div className="text-white text-xl md:text-3xl">PikaStore</div>
         </div>
-        {/* Authentication Buttons */}
-        <div className="flex space-x-4">
+
+        {/* Authentication & Cart */}
+        <div className="flex items-center space-x-6">
+          {/* Cart Icon */}
+          <div className="relative cursor-pointer" onClick={handleCartClick}>
+            <Image
+              src="/cart.svg"
+              alt="PikaStore Cart"
+              width={48}
+              height={48}
+            />
+            {/* Display the number of items in the cart */}
+            {cartItemsCount > 0 && (
+              <div className="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs w-4 h-4 flex justify-center items-center">
+                {cartItemsCount}
+              </div>
+            )}
+          </div>
+
+          {/* Authentication Buttons */}
           {!isLoggedIn ? (
             <>
               <Link href="/auth/login">
