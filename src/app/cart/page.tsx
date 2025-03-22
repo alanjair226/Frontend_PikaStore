@@ -138,8 +138,8 @@ const CartPage = () => {
                 {/* Button to go to checkout */}
                 <div className="mt-8 text-center">
                     <button
-                        onClick={() => router.push('/checkout')}
-                        className="px-6 py-3 bg-accents text-white rounded-lg hover:bg-primary transition duration-200"
+                        onClick={() => router.push('/orders/checkout')}
+                        className="px-6 py-3 bg-accents text-white rounded-lg hover:bg-primary transition duration-200 cursor-pointer"
                     >
                         Proceed to Checkout
                     </button>
