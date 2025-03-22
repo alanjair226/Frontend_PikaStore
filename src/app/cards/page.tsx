@@ -62,7 +62,7 @@ const CardsPage = () => {
     };
 
     return (
-        <main className="bg-gray-900 min-h-screen py-12 px-4">
+        <main className=" min-h-screen py-12 px-4">
             <div className="max-w-6xl mx-auto text-white">
                 <h1 className="text-4xl mb-8 text-center">Your Cards</h1>
 
@@ -75,7 +75,7 @@ const CardsPage = () => {
                 <div className="space-y-8">
                     {cards.length > 0 ? (
                         cards.map((card) => (
-                            <div key={card.id} className="flex flex-col bg-gray-800 p-4 rounded-lg mb-4">
+                            <div key={card.id} className="flex flex-col bg-secondary p-4 rounded-lg mb-4">
                                 <h2 className="text-lg font-semibold">Card Number: {card.card_number}</h2>
                                 <p>Expiration Date: {card.expiration_date}</p>
                                 <p>Cardholder: {card.cardholder_name}</p>
