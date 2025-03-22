@@ -1,9 +1,15 @@
 import type { NextConfig } from 'next';
 
-const nextConfig: NextConfig = {
+const NextConfig = {
   images: {
-    domains: ['raw.githubusercontent.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'raw.githubusercontent.com',
+        pathname: '/**',
+      },
+    ],
   },
 };
 
-export default nextConfig;
+module.exports = NextConfig;
