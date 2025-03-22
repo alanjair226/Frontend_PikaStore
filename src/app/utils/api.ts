@@ -297,3 +297,34 @@ export const getOrders = async () => {
     }
 };
 
+export const Order = async (cardId: number) => {
+    try {
+        const token = Cookies.get('token');
+        if (!token) {
+            throw new Error('No token found');
+        }
+
+        const decodedToken: any = jwtDecode(token);
+        const userId = decodedToken.userId;
+
+        const response = await axios.post(
+            `${API_URL}/orders`, {
+            user: userId,
+            card: cardId
+        },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+        if (response.status === 201) {
+            return { message: 'Order registered successfully' };
+        } else {
+            throw new Error('Failed to Order');
+        }
+    } catch (error) {
+        throw error;
+    }
+};
+
