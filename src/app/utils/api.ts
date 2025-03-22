@@ -27,7 +27,7 @@ export const getPokemonById = async (id: number) => {
 };
 
 // Function to register a user
-export const registerUser = async (userData: { email: string; password: string }) => {
+export const registerUser = async (userData: { username:string, email: string; password: string }) => {
     try {
         const response = await axios.post(`${API_URL}/auth/register`, userData);
         return response.data;
