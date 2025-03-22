@@ -17,14 +17,13 @@ export default function RootLayout({
   return (
     <AuthProvider>
       <CartProvider>
-      <html lang="en">
-        <body className="bg-background min-h-screen ">
-          <Navbar />
-          {children}
-        </body>
-      </html>
+        <html lang="en">
+          <body className="bg-background min-h-screen pt-16">
+            <Navbar />
+            {children}
+          </body>
+        </html>
       </CartProvider>
     </AuthProvider>
-    
   );
 }
