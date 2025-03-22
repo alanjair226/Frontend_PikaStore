@@ -18,7 +18,7 @@ export default function RootLayout({
     <AuthProvider>
       <CartProvider>
         <html lang="en">
-          <body className="bg-background min-h-screen pt-16">
+          <body className="bg-background min-h-screen pt-24">
             <Navbar />
             {children}
           </body>
