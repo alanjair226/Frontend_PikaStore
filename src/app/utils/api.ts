@@ -12,7 +12,6 @@ export const getPokemons = async (page: number, type: string, category: string, 
         });
         return response.data;
     } catch (error) {
-        console.error('Error fetching Pokémon:', error);
         throw error;
     }
 };
@@ -23,7 +22,6 @@ export const getPokemonById = async (id: number) => {
         const response = await axios.get(`${API_URL}/pokemon/${id}`);
         return response.data;
     } catch (error) {
-        console.error('Error fetching Pokémon by ID:', error);
         throw error;
     }
 };
@@ -34,7 +32,6 @@ export const registerUser = async (userData: { email: string; password: string }
         const response = await axios.post(`${API_URL}/auth/register`, userData);
         return response.data;
     } catch (error) {
-        console.error('Error registering user:', error);
         throw error;
     }
 };
@@ -45,7 +42,6 @@ export const loginUser = async (credentials: { email: string; password: string }
         const response = await axios.post(`${API_URL}/auth/login`, credentials);
         return response.data;
     } catch (error) {
-        console.error('Error logging in user:', error);
         throw error;
     }
 };
@@ -72,7 +68,6 @@ export const getCartItemsNumber = async () => {
 
         return response.data.items.reduce((total: any, item: any) => total + item.quantity, 0);
     } catch (error) {
-        console.error('Error fetching cart items:', error);
         throw error;
     }
 };
@@ -99,7 +94,6 @@ export const getCart = async () => {
 
         return response.data;
     } catch (error) {
-        console.error('Error fetching cart items:', error);
         throw error;
     }
 };
@@ -116,8 +110,6 @@ export const patchCartItem = async (cartItemId: number, newPokeballId: number) =
         // Decode the token to get the userId from the payload
         const decodedToken: any = jwtDecode(token);
         const userId = decodedToken.userId;
-
-        console.log(userId, cartItemId, newPokeballId)
 
         // Make the request to the cart endpoint with userId
         const response = await axios.patch(`${API_URL}/cart/update-item`, {
@@ -137,7 +129,6 @@ export const patchCartItem = async (cartItemId: number, newPokeballId: number) =
             throw new Error('Failed to change PokeBall');
         }
     } catch (error) {
-        console.error('Error fetching cart items:', error);
         throw error;
     }
 };
@@ -159,13 +150,11 @@ export const getPokeballs = async () => {
 
         return response.data;
     } catch (error) {
-        console.error('Error fetching cart items:', error);
         throw error;
     }
 };
 
 export const addPokemonToCart = async (pokemonId: number) => {
-    console.log(pokemonId)
     try {
         // Get token from cookies
         const token = Cookies.get('token');
@@ -190,14 +179,12 @@ export const addPokemonToCart = async (pokemonId: number) => {
 
         // Check if the response status is 201 (Created)
         if (response.status === 201) {
-            console.log('Pokemon added to cart successfully!');
             return { message: 'Pokemon added to cart successfully' };
         } else {
             throw new Error('Failed to add Pokémon to cart');
         }
 
     } catch (error) {
-        console.error('Error adding Pokémon to cart:', error);
         throw error; // Will be handled by the calling component
     }
 };
@@ -234,7 +221,6 @@ export const registerCard = async (cardNumber: string, expirationDate: string, c
             throw new Error('Failed to register card');
         }
     } catch (error) {
-        console.error('Error registering card:', error);
         throw error;
     }
 };
@@ -260,7 +246,6 @@ export const getCardsByUser = async () => {
 
         return response.data; // Return the cards data
     } catch (error) {
-        console.error('Error fetching cards:', error);
         throw error;
     }
 };
@@ -283,7 +268,31 @@ export const getCardById = async (cardId: number) => {
 
         return response.data; // Return the specific card data
     } catch (error) {
-        console.error('Error fetching card:', error);
+        throw error;
+    }
+};
+
+
+export const getOrders = async () => {
+    try {
+        const token = Cookies.get('token');
+        if (!token) {
+            throw new Error('No token found');
+        }
+
+        const decodedToken: any = jwtDecode(token);
+        const userId = decodedToken.userId;
+
+        const response = await axios.post(
+            `${API_URL}/orders/${userId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+        return response.data
+    } catch (error) {
         throw error;
     }
 };
