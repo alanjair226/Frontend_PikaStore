@@ -41,7 +41,7 @@ const Navbar = () => {
               <div className="text-white text-xl md:text-3xl">PikaStore</div>
             </div>
           </Link>
-          <Link href="/pokedex">
+          <Link href="/">
             <div className="text-white text-lg cursor-pointer">Pokedex</div>
           </Link>
         </div>
