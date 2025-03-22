@@ -142,7 +142,7 @@ export default function Home() {
             <button
               onClick={handlePrevious}
               disabled={currentPage === 1}
-              className="px-4 py-2 bg-accents text-white rounded disabled:opacity-50"
+              className="px-4 py-2 bg-accents w-32 text-white rounded disabled:opacity-50"
             >
               Previous
             </button>
@@ -152,7 +152,7 @@ export default function Home() {
             <button
               onClick={handleNext}
               disabled={currentPage === catalog.totalPages}
-              className="px-4 py-2 bg-accents text-white rounded disabled:opacity-50"
+              className="px-4 py-2 bg-accents w-32 text-white rounded disabled:opacity-50"
             >
               Next
             </button>
