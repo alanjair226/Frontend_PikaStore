@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getOrders } from '@/app/utils/api';
+import Image from 'next/image';
 
 // Define interfaces for Order data
 interface Pokemon {
@@ -100,9 +101,11 @@ const OrdersPage = () => {
                                     <div className="grid grid-cols-1 gap-4">
                                         {order.items.map((item) => (
                                             <div key={item.id} className="flex items-center space-x-4 bg-gray-700 p-3 rounded">
-                                                <img
+                                                <Image
                                                     src={item.pokemon.sprite}
                                                     alt={item.pokemon.name}
+                                                    width={48}
+                                                    height={48}
                                                     className="w-12 h-12 rounded"
                                                 />
                                                 <div>
@@ -110,9 +113,11 @@ const OrdersPage = () => {
                                                     <p className="text-gray-300 text-sm">Qty: {item.quantity}</p>
                                                     <p className="text-gray-300 text-sm">Price: ${item.price}</p>
                                                 </div>
-                                                <img
+                                                <Image
                                                     src={item.pokeball.sprite}
                                                     alt={item.pokeball.name}
+                                                    width={48}
+                                                    height={48}
                                                     className="w-10 h-10"
                                                 />
                                             </div>
