@@ -74,7 +74,7 @@ const OrdersPage = () => {
     }, [router]);
 
     return (
-        <main className="bg-gray-900 min-h-screen py-12 px-4">
+        <main className="min-h-screen py-12 px-4">
             <div className="max-w-6xl mx-auto">
                 <h1 className="text-4xl font-bold text-center text-white mb-10">My Orders</h1>
 
@@ -87,7 +87,7 @@ const OrdersPage = () => {
                 {orders.length > 0 ? (
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                         {orders.map((order, index) => (
-                            <div key={order.id} className="bg-gray-800 rounded-lg shadow-lg p-6 flex flex-col">
+                            <div key={order.id} className="bg-secondary rounded-lg shadow-lg p-6 flex flex-col">
                                 <div className="mb-4">
                                     {/* Display a sequential order number (e.g., Order #1) instead of the order ID */}
                                     <h2 className="text-2xl font-semibold text-white">Order #{index + 1}</h2>
@@ -100,7 +100,7 @@ const OrdersPage = () => {
                                     <h3 className="text-xl font-semibold text-white mb-2">Items:</h3>
                                     <div className="grid grid-cols-1 gap-4">
                                         {order.items.map((item) => (
-                                            <div key={item.id} className="flex items-center space-x-4 bg-gray-700 p-3 rounded">
+                                            <div key={item.id} className="flex items-center space-x-4 bg-primary p-3 rounded">
                                                 <Image
                                                     src={item.pokemon.sprite}
                                                     alt={item.pokemon.name}
