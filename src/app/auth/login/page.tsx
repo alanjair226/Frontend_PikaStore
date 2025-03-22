@@ -31,8 +31,8 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gray-900">
-      <div className="max-w-md w-full bg-gray-800 p-8 rounded shadow">
+    <main className="min-h-screen flex items-center justify-center ">
+      <div className="max-w-md w-full bg-secondary p-8 rounded shadow">
         <h1 className="text-2xl text-white mb-4 text-center">Login</h1>
         
         {errorMessage && (
@@ -48,7 +48,7 @@ export default function LoginPage() {
             <input
               id="email"
               type="email"
-              className="w-full p-2 rounded"
+              className="w-full p-2 rounded border-b-2 border-white text-white"
               {...register('email', {
                 required: 'Email is required',
                 pattern: {
@@ -72,7 +72,7 @@ export default function LoginPage() {
             <input
               id="password"
               type="password"
-              className="w-full p-2 rounded"
+              className="w-full p-2 rounded border-b-2 border-white text-white"
               {...register('password', {
                 required: 'Password is required',
                 minLength: {
@@ -91,7 +91,7 @@ export default function LoginPage() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
+            className="w-full bg-primary text-white py-2 rounded hover:bg-accents transition"
           >
             Login
           </button>
@@ -101,7 +101,7 @@ export default function LoginPage() {
         <div className="mt-4 text-center">
           <p className="text-white text-sm">
             Don't have an account?{' '}
-            <a href="/auth/register" className="text-blue-400 underline">
+            <a href="/auth/register" className="text-accents underline">
               Register
             </a>
           </p>
