@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getCart } from '@/app/utils/api'; // Function to fetch cart data
 import { getPokeballs, patchCartItem } from '@/app/utils/api'; // Function to fetch Pokéballs and update the cart
+import Image from "next/image";
 
 const CartPage = () => {
     const router = useRouter();
@@ -65,7 +66,7 @@ const CartPage = () => {
                         cartItems.map((item: any) => (
                             <div key={item.id} className="flex flex-col md:flex-row gap-4 items-center justify-between bg-secondary p-4 lg:px-20 rounded-lg mb-4">
                                 <div className="flex items-center space-x-4">
-                                    <img src={item.pokemon.sprite} alt={item.pokemon.name} className="w-20 h-20 object-cover" />
+                                    <Image src={item.pokemon.sprite} alt={item.pokemon.name} width={80} height={80} className="w-20 h-20 object-cover" />
                                     <div>
                                         <h2 className="text-lg font-semibold">{item.pokemon.name}</h2>
                                         <p className="text-sm text-gray-400">Quantity: {item.quantity}</p>
@@ -77,9 +78,11 @@ const CartPage = () => {
                                 <div className="flex items-center space-x-4">
                                     {/* Show the current PokéBall */}
                                     <div className="flex items-center space-x-2">
-                                        <img
+                                        <Image
                                             src={item.pokeball.sprite}
                                             alt={item.pokeball.name}
+                                            height={40}
+                                            width={40}
                                             className="w-10 h-10"
                                         />
                                         <span className="text-sm">{item.pokeball.name}</span>
@@ -104,9 +107,11 @@ const CartPage = () => {
                                                             setIsDropdownOpen(null); // Close the dropdown after selection
                                                         }}
                                                     >
-                                                        <img
+                                                        <Image
                                                             src={pokeball.sprite}
                                                             alt={pokeball.name}
+                                                            width={24}
+                                                            height={24}
                                                             className="w-6 h-6 mr-2"
                                                         />
                                                         <span>{pokeball.name}</span>

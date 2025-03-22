@@ -1,4 +1,4 @@
-// src/components/PokemonCard.tsx
+import Image from "next/image";
 import Link from 'next/link';
 
 interface PokemonCardProps {
@@ -35,9 +35,11 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ id, name, sprite, base_price,
   return (
     <div className="bg-gradient-to-r from-primary to-secondary rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 transform hover:scale-105">
       {/* Pokémon image */}
-      <img
+      <Image
         src={sprite}
         alt={name}
+        height={224}
+        width={224}
         className="w-full h-56 object-contain p-4 bg-background"
       />
       <div className="p-6">

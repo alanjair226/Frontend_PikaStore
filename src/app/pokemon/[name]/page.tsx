@@ -6,7 +6,8 @@ import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter, useSearchParams, useParams } from 'next/navigation';
 import { addPokemonToCart } from '@/app/utils/api';
-import { useCart } from '@/context/CartContext'; // Importa el hook useCart
+import { useCart } from '@/context/CartContext';
+import Image from "next/image";
 
 const typeColorMapping: Record<string, { normal: string; hover: string }> = {
     fire: { normal: 'rgba(255,69,0,0.8)', hover: 'rgba(255,69,0,1)' },
@@ -100,9 +101,11 @@ export default function PokemonDetails() {
 
                 <div className="flex flex-col md:flex-row md:items-start md:space-x-8">
                     <div className="flex justify-center mb-8 md:mb-0 md:w-1/2">
-                        <img
+                        <Image
                             src={pokemon.sprites?.other?.['official-artwork']?.front_default || pokemon.sprites?.front_default}
                             alt={pokemon.name}
+                            width={288}
+                            height={288}
                             className="w-72 h-72 object-contain transition duration-300"
                             style={glowStyle}
                         />
