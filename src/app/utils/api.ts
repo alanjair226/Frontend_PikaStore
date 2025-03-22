@@ -77,6 +77,93 @@ export const getCartItemsNumber = async () => {
     }
 };
 
+export const getCart = async () => {
+    try {
+        // Get token from cookies
+        const token = Cookies.get('token');
+
+        if (!token) {
+            throw new Error('No token found');
+        }
+
+        // Decode the token to get the userId from the payload
+        const decodedToken: any = jwtDecode(token);
+        const userId = decodedToken.userId;
+
+        // Make the request to the cart endpoint with userId
+        const response = await axios.get(`${API_URL}/cart/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`, // Send the token in the Authorization header
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching cart items:', error);
+        throw error;
+    }
+};
+
+export const patchCartItem = async (cartItemId:number, newPokeballId: number) => {
+    try {
+        // Get token from cookies
+        const token = Cookies.get('token');
+
+        if (!token) {
+            throw new Error('No token found');
+        }
+
+        // Decode the token to get the userId from the payload
+        const decodedToken: any = jwtDecode(token);
+        const userId = decodedToken.userId;
+
+        console.log(userId ,cartItemId, newPokeballId)
+
+        // Make the request to the cart endpoint with userId
+        const response = await axios.patch(`${API_URL}/cart/update-item`, {
+            userId,
+            cartItemId,
+            newPokeballId
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`, // Send the token in the Authorization header
+            }
+        });
+
+        if (response.status === 200) {
+            
+            return { message: 'PokeBall changed' };
+        } else {
+            throw new Error('Failed to change PokeBall');
+        }
+    } catch (error) {
+        console.error('Error fetching cart items:', error);
+        throw error;
+    }
+};
+
+export const getPokeballs = async () => {
+    try {
+        // Get token from cookies
+        const token = Cookies.get('token');
+
+        if (!token) {
+            throw new Error('No token found');
+        }
+
+        const response = await axios.get(`${API_URL}/pokeballs`, {
+            headers: {
+                Authorization: `Bearer ${token}`, // Send the token in the Authorization header
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching cart items:', error);
+        throw error;
+    }
+};
+
 export const addPokemonToCart = async (pokemonId: number) => {
     console.log(pokemonId)
     try {
