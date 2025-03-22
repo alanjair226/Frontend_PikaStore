@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/context/AuthContext';
 import { getOrders } from '@/app/utils/api';
 
 // Define interfaces for Order data
@@ -56,7 +55,6 @@ interface Order {
 const OrdersPage = () => {
     const [orders, setOrders] = useState<Order[]>([]);
     const [message, setMessage] = useState('');
-    const { isLoggedIn } = useAuth();
     const router = useRouter();
 
     // Function to fetch orders for the logged-in user
@@ -70,66 +68,70 @@ const OrdersPage = () => {
         }
     };
 
-    // Load orders when the component mounts
     useEffect(() => {
-        // Removed immediate redirection on reload.
-        // If your route is already protected (e.g., via middleware), you can safely fetch orders here.
         fetchOrders();
     }, [router]);
 
     return (
         <main className="bg-gray-900 min-h-screen py-12 px-4">
-            <div className="max-w-6xl mx-auto text-white">
-                <h1 className="text-4xl mb-8 text-center">My Orders</h1>
+            <div className="max-w-6xl mx-auto">
+                <h1 className="text-4xl font-bold text-center text-white mb-10">My Orders</h1>
 
                 {message && (
-                    <div className="bg-red-500 text-white p-4 rounded text-center mb-4">
+                    <div className="bg-red-500 text-white p-4 rounded mb-6 text-center">
                         {message}
                     </div>
                 )}
 
                 {orders.length > 0 ? (
-                    orders.map((order) => (
-                        <div key={order.id} className="bg-gray-800 p-4 rounded-lg mb-6">
-                            <div className="flex justify-between items-center">
-                                <h2 className="text-2xl font-semibold">Order #{order.id}</h2>
-                                <span className="text-lg">Total: ${order.total_price}</span>
-                            </div>
-                            <p className="text-sm text-gray-300">
-                                Date: {new Date(order.createdAt).toLocaleString()}
-                            </p>
-                            {/* List order items */}
-                            <div className="mt-4 space-y-4">
-                                {order.items.map((item) => (
-                                    <div key={item.id} className="flex items-center space-x-4">
-                                        <img
-                                            src={item.pokemon.sprite}
-                                            alt={item.pokemon.name}
-                                            className="w-12 h-12"
-                                        />
-                                        <div>
-                                            <h3 className="text-lg font-semibold">{item.pokemon.name}</h3>
-                                            <p className="text-sm">Quantity: {item.quantity}</p>
-                                            <p className="text-sm">Price: ${item.price}</p>
-                                        </div>
-                                        <img
-                                            src={item.pokeball.sprite}
-                                            alt={item.pokeball.name}
-                                            className="w-10 h-10"
-                                        />
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                        {orders.map((order, index) => (
+                            <div key={order.id} className="bg-gray-800 rounded-lg shadow-lg p-6 flex flex-col">
+                                <div className="mb-4">
+                                    {/* Display a sequential order number (e.g., Order #1) instead of the order ID */}
+                                    <h2 className="text-2xl font-semibold text-white">Order #{index + 1}</h2>
+                                    <p className="text-gray-300 text-sm">
+                                        {new Date(order.createdAt).toLocaleString()}
+                                    </p>
+                                    <p className="mt-2 text-lg text-white">Total: ${order.total_price}</p>
+                                </div>
+                                <div className="flex-1">
+                                    <h3 className="text-xl font-semibold text-white mb-2">Items:</h3>
+                                    <div className="grid grid-cols-1 gap-4">
+                                        {order.items.map((item) => (
+                                            <div key={item.id} className="flex items-center space-x-4 bg-gray-700 p-3 rounded">
+                                                <img
+                                                    src={item.pokemon.sprite}
+                                                    alt={item.pokemon.name}
+                                                    className="w-12 h-12 rounded"
+                                                />
+                                                <div>
+                                                    <h4 className="text-white font-semibold">{item.pokemon.name}</h4>
+                                                    <p className="text-gray-300 text-sm">Qty: {item.quantity}</p>
+                                                    <p className="text-gray-300 text-sm">Price: ${item.price}</p>
+                                                </div>
+                                                <img
+                                                    src={item.pokeball.sprite}
+                                                    alt={item.pokeball.name}
+                                                    className="w-10 h-10"
+                                                />
+                                            </div>
+                                        ))}
                                     </div>
-                                ))}
+                                </div>
+                                <div className="mt-4 border-t border-gray-600 pt-4">
+                                    <p className="text-sm text-gray-300">
+                                        Card: {order.card.card_number} - {order.card.cardholder_name}
+                                    </p>
+                                    <p className="text-sm text-gray-300">
+                                        Expires: {order.card.expiration_date}
+                                    </p>
+                                </div>
                             </div>
-                            {/* Display card information used for the order */}
-                            <div className="mt-4">
-                                <p className="text-sm">
-                                    Card: {order.card.card_number} - {order.card.cardholder_name} (Expires: {order.card.expiration_date})
-                                </p>
-                            </div>
-                        </div>
-                    ))
+                        ))}
+                    </div>
                 ) : (
-                    <p className="text-center">No orders found.</p>
+                    <p className="text-center text-white">No orders found.</p>
                 )}
             </div>
         </main>
