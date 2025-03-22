@@ -3,17 +3,23 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { getCartItemsNumber } from '@/app/utils/api';
 import Cookies from 'js-cookie';
+import { useAuth } from '@/context/AuthContext';
 
 const CartContext = createContext<any>(null);
 
 export const useCart = () => useContext(CartContext);
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { isLoggedIn } = useAuth();
   const [cartItemsCount, setCartItemsCount] = useState<number>(0);
 
   useEffect(() => {
+    // If the user is not logged in, reset the cart count to 0
+    if (!isLoggedIn) {
+      setCartItemsCount(0);
+      return;
+    }
     // Only fetch cart items if the token exists (user is logged in)
-    if (!Cookies.get('token')) return;
     const fetchCartItems = async () => {
       try {
         const itemsCount = await getCartItemsNumber();
@@ -24,11 +30,13 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     fetchCartItems();
-  }, []);
+  }, [isLoggedIn]); // re-run effect when isLoggedIn changes
 
   const updateCartCount = async () => {
-    // Only update the cart count if the token exists
-    if (!Cookies.get('token')) return;
+    if (!isLoggedIn) {
+      setCartItemsCount(0);
+      return;
+    }
     try {
       const itemsCount = await getCartItemsNumber();
       setCartItemsCount(itemsCount);
