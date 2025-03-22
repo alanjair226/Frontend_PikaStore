@@ -135,7 +135,7 @@ export default function PokemonDetails() {
                         <h2 className="text-2xl text-white mb-4">Stats</h2>
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
                             {pokemon.stats.map((stat: any) => (
-                                <div key={stat.stat.name} className="flex flex-col items-center bg-gray-800 p-4 rounded">
+                                <div key={stat.stat.name} className="flex flex-col items-center bg-secondary p-4 rounded">
                                     <span className="text-white font-bold capitalize">{stat.stat.name}</span>
                                     <span className="text-white">{stat.base_stat}</span>
                                 </div>
