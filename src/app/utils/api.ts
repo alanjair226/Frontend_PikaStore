@@ -70,7 +70,7 @@ export const getCartItemsNumber = async () => {
             },
         });
 
-        return response.data.items.length; // Return the number of items in the cart
+        return response.data.items.reduce((total:any, item:any) => total + item.quantity, 0);
     } catch (error) {
         console.error('Error fetching cart items:', error);
         throw error;
