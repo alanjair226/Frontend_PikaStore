@@ -1,4 +1,6 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -45,5 +47,62 @@ export const loginUser = async (credentials: { email: string; password: string }
     } catch (error) {
         console.error('Error logging in user:', error);
         throw error;
+    }
+};
+
+export const getCartItemsNumber = async () => {
+    try {
+        // Get token from cookies
+        const token = Cookies.get('token');
+
+        if (!token) {
+            throw new Error('No token found');
+        }
+
+        // Decode the token to get the userId from the payload
+        const decodedToken: any = jwtDecode(token);
+        const userId = decodedToken.userId;
+
+        // Make the request to the cart endpoint with userId
+        const response = await axios.get(`${API_URL}/cart/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`, // Send the token in the Authorization header
+            },
+        });
+
+        return response.data.items.length; // Return the number of items in the cart
+    } catch (error) {
+        console.error('Error fetching cart items:', error);
+        throw error;
+    }
+};
+
+export const addPokemonToCart = async (pokemonId: number) => {
+    try {
+        // Get token from cookies
+        const token = Cookies.get('token');
+
+        if (!token) {
+            throw new Error('No token found');
+        }
+
+        // Decode the token to get the userId from the payload
+        const decodedToken: any = jwtDecode(token);
+        const userId = decodedToken.userId;
+
+        // Make the request to add the Pokémon to the cart
+        const response = await axios.post(`${API_URL}/cart/add`, {
+            userId,
+            pokemonId,
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`, // Send the token in the Authorization header
+            }
+        });
+
+        return response.data; // Return the response, typically { message: 'Pokemon added to cart' }
+    } catch (error) {
+        console.error('Error adding Pokémon to cart:', error);
+        throw error; // Will be handled by the calling component
     }
 };
