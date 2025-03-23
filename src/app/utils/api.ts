@@ -98,41 +98,6 @@ export const getCart = async () => {
     }
 };
 
-export const patchCartItem = async (cartItemId: number, newPokeballId: number) => {
-    try {
-        // Get token from cookies
-        const token = Cookies.get('token');
-
-        if (!token) {
-            throw new Error('No token found');
-        }
-
-        // Decode the token to get the userId from the payload
-        const decodedToken: any = jwtDecode(token);
-        const userId = decodedToken.userId;
-
-        // Make the request to the cart endpoint with userId
-        const response = await axios.patch(`${API_URL}/cart/update-item`, {
-            userId,
-            cartItemId,
-            newPokeballId
-        }, {
-            headers: {
-                Authorization: `Bearer ${token}`, // Send the token in the Authorization header
-            }
-        });
-
-        if (response.status === 200) {
-
-            return { message: 'PokeBall changed' };
-        } else {
-            throw new Error('Failed to change PokeBall');
-        }
-    } catch (error) {
-        throw error;
-    }
-};
-
 export const getPokeballs = async () => {
     try {
         // Get token from cookies
@@ -188,6 +153,74 @@ export const addPokemonToCart = async (pokemonId: number) => {
         throw error; // Will be handled by the calling component
     }
 };
+
+export const patchCartItem = async (cartItemId: number, newPokeballId?: number, newQuantity?: number) => {
+    try {
+        // Get token from cookies
+        const token = Cookies.get('token');
+
+        if (!token) {
+            throw new Error('No token found');
+        }
+
+        // Decode the token to get the userId from the payload
+        const decodedToken: any = jwtDecode(token);
+        const userId = decodedToken.userId;
+
+        // Make the request to the cart endpoint with userId
+        const response = await axios.patch(`${API_URL}/cart/update-item`, {
+            userId,
+            cartItemId,
+            newPokeballId,
+            newQuantity
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`, // Send the token in the Authorization header
+            }
+        });
+
+        if (response.status === 200) {
+
+            return { message: "Producto Updated" };
+        } else {
+            throw new Error(response.data.message);
+        }
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const removeItemFromCart = async (cartItemId: number) => {
+    try {
+        const token = Cookies.get('token');
+        if (!token) {
+            throw new Error('No token found');
+        }
+
+        const decodedToken: any = jwtDecode(token);
+        const userId = decodedToken.userId;
+
+        const response = await axios.delete(`${API_URL}/cart/remove`, {
+            data: {
+                userId,
+                cartItemId,
+            },
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        if (response.status === 200) {
+            return { message: response.data.message };
+        } else {
+            throw new Error(response.data.message);
+        }
+    } catch (error) {
+        throw error;
+    }
+};
+
+
 
 
 export const registerCard = async (cardNumber: string, expirationDate: string, cardholderName: string) => {
@@ -327,4 +360,3 @@ export const Order = async (cardId: number) => {
         throw error;
     }
 };
-
