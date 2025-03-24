@@ -24,8 +24,8 @@ PikaStore is an e-commerce website inspired by the Pokémon universe. The applic
 
 1. **Clone the Repository:**
     ```bash
-    git clone <REPOSITORY_URL>
-    cd <PROJECT_NAME>
+    git clone https://github.com/alanjair226/Frontend_PikaStore.git
+    cd Frontend_PikaStore
     ```
 2. **Install Dependencies:**
     ```
@@ -35,7 +35,7 @@ PikaStore is an e-commerce website inspired by the Pokémon universe. The applic
     - Create a .env.local file at the root of the project.
     - Add the necessary variables, for example:
     ```.env.local
-    API_URL=https://your-api-url.com
+    API_URL=https:localhost:3001
     ```
 4. **Run the Project in Development Mode:**
     ```bash
