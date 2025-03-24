@@ -35,7 +35,7 @@ PikaStore is an e-commerce website inspired by the Pokémon universe. The applic
     - Create a .env.local file at the root of the project.
     - Add the necessary variables, for example:
     ```.env.local
-    API_URL=https:localhost:3001
+    NEXT_PUBLIC_API_URL= https:localhost:3001 //NestJs App
     ```
 4. **Run the Project in Development Mode:**
     ```bash
@@ -44,4 +44,4 @@ PikaStore is an e-commerce website inspired by the Pokémon universe. The applic
     - Open your browser and navigate to http://localhost:3000.
 
 ## Additional Notes
-Ensure that your backend/API is correctly configured and accessible via the API_URL specified in the environment variables.
+Ensure that your backend/API is correctly configured and accessible via the NEXT_PUBLIC_API_URL specified in the environment variables.
